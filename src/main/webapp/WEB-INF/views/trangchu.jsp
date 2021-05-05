@@ -162,7 +162,7 @@
 			<c:forEach var="SanPhamThuI" items="${listSanPham}">
 			<% x= x+ 0.05; %>
 				<div class="col-md-4 col-lg-3 col-sm-6 itemsanPham ">
-					<div class="card text-center wow fadeInDown "  data-wow-delay="<%=x %>s"  >
+					<div class="card text-center wow animate__zoomIn "  data-wow-delay="<%=x %>s"  >
 						<img class="card-img-top" src="<c:url value="/resources/Image/sanpham/${ SanPhamThuI.getHinhSanPham()}"/>" alt="Card image cap">
 						<div class="card-body">
 							<h4 class="card-title tensp">${ SanPhamThuI.getTenSanPham()} </h4>
@@ -189,9 +189,9 @@
 			
 			<div class="col-sm-4 col-md-4 wow tada">
 				<p><span class="title-footer">LIÊN HỆ</span></p>
-				<span>43 Nguyễn trãi , phường 12, quận 5  TP. Hồ Chí Minh</span>
-				<span>checongbinh@gmail.com</span>
-				<span>0909489834</span>
+				<span>TT số 5 , Nam giang Nam Trực Nam Định</span>
+				<span>doanxuanphi2@gmail.com</span>
+				<span>0345329009</span>
 			</div>
 			
 			<div class="col-sm-4 col-md-4 wow tada">
