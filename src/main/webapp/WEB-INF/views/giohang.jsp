@@ -12,7 +12,15 @@
 <link  href="<c:url value="/resources/css/styleTrangchu.css"/>" rel="stylesheet">
 <link  href="<c:url value="/resources/css/animate.min.css"/>" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+
+<!-- hiện ảnh -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.0.0/magnific-popup.min.css">
+
+
 <script type="text/javascript" src='<c:url value="/resources/css/wow.min.js"  />'></script>
+
+
+
 <script> new WOW().init(); </script>
 
 
@@ -27,8 +35,17 @@
 	
 	
 		<nav class="navbar navbar-expand-lg navbar-light bg-light maumenu">
-  <a class="navbar-brand wow flash" data-wow-duration="1s" data-wow-iteration="5" href="#">
-    <img alt="anh bia" src='<c:url value="/resources/Image/icon_yame_shop.png" />'>
+  <a class="navbar-brand "  href="#">
+  	
+  		<div class="quanlyml">
+								<span class="fname">Đ</span> <span class="fname">o</span> <span
+									class="fname">à</span> <span class="fname">n</span> <span
+									class="fname">x</span> <span class="fname">u</span> <span
+									class="fname">â</span> <span class="fname">n</span> <span
+									class="fname">P</span> <span class="fname">h</span> <span
+									class="fname">i</span>
+							</div> <!-- ekdkdk -->
+  
   </a>
 <!--    phan nay de menu thu nhu
  -->  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -38,21 +55,26 @@
   <div class="collapse navbar-collapse itemmenu  " id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto  itemmenutrai wow fadeInDown  "  data-wow-delay="0.5s" data-wow-delay="1s">
       <li class="nav-item active">
-        <a class="nav-link" href="/MiniTest/trangchu">Trang chủ <span class="sr-only">(current)</span></a>
+        <a class="nav-link" href=' <c:url value="/trangchu"/>   '>Trang chủ <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#">Dịch vụ</a>
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
+          Danh mục
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
+         
+          <c:forEach var="danhMucSP" items="${danhmucsanpham}">
+			  <a class="dropdown-item" href='<c:url value="/danhmuc/${danhMucSP.getMaDanhMuc()}/${danhMucSP.getTenDanhMuc() }"/> '> ${danhMucSP.getTenDanhMuc()}</a>
+				
+				</c:forEach>
+         
+         
+        </div> 
+        
+        
       </li>
       </ul> 
 <!--       het iemtrai -->
@@ -60,7 +82,7 @@
 				<c:choose>
 					<c:when test="${chucaidau != null }">
 			<li class="nav-item ">
-			<a class=" nav-link circle-avartar" href="http://localhost:8080/MiniTest/dangnhap/">
+			<a class=" nav-link circle-avartar" href=' <c:url value="/giohang"/>   '>
 			<span> ${chucaidau }</span>
 			</a>
 			
@@ -68,7 +90,7 @@
 		</c:when>
 					
 					<c:otherwise>
-			<li class="nav-item ">	<a class="nav-link LinkDangNhap" href="/MiniTest/dangnhap/">
+			<li class="nav-item ">	<a class="nav-link LinkDangNhap" href=' <c:url value="/dangnhap"/>   '>
 				Đăng nhập
 				</a>	
 				</li>
@@ -78,8 +100,8 @@
      	
 <!-- 	<div class="shoppingCast"> -->
      	 <li class="nav-item ParentShoppingCast ">
-     	  <a class="logogioohang" href="/MiniTest/giohang">
-     <img alt="anh bia" src='<c:url value="/resources/Image/ic_shopping_cart_white_24dp_1x.png" />'></a>
+     	  <a class="logogioohang" href=' <c:url value="/giohang"/>   '>
+     <img alt="anh bia" src='<c:url value="/resources/Image/ic_shopping_cart_white_24dp_1x.png" />'>
      
      <c:if test="${SumCast > 0 }">
 			        	 <span id="giohang" class="sumCast">${SumCast } </span>
@@ -88,7 +110,7 @@
 			        <c:if test="${SumCast <= 0 || SumCast == null  }">
 			        	 <span id="giohang" class=""> </span>
 			        </c:if>
-      	 
+      	 </a>
 		</li>
 
 	</ul>
@@ -113,7 +135,7 @@
 		<div class="container-fluid">
 			<div class="row phanDongGiohang">
 			 <c:if test="${SumCast > 0 }">
-				<div class="col-md-8 col-sm-12 ">
+				<div class="col-lg-9 col-sm-12 ">
 			
 			
 			        <h5 class="tieuDeGioHang">Thông tin giỏ hàng</h5>
@@ -134,7 +156,9 @@
 								<c:forEach var="ListGioHang" items="${ListGioHang}">
 								<tr>
 								<td >
+				<a href=" ${ListGioHang.getUrlAnhSP() }" class="work-image"> 
 						<img class="anhsp"  src='${ListGioHang.getUrlAnhSP() } ' alt="" />
+						</a>
 								</td>
 								<td class="tensp" data-Masp="${ListGioHang.getMasp() }" ">${ListGioHang.getTenSP() }
 									</td>
@@ -148,10 +172,10 @@
 									
 										
 									<div class="input-group nhomSoLuong">
-										<span class="decrease">-</span>
+										<span class="decrease"  title = "Giảm Số Lượng " >-</span>
 											<input type="number" min="1" max="${ListGioHang.getSoLuongTrongKho()}" value="${ListGioHang.getSoLuong() }" class="input giohang_SoLuong"  data-SoLuongKho="${ListGioHang.getSoLuongTrongKho()}" />
 									
-										<span class="increase">+</span>
+										<span class="increase"  data-toggle="tooltip" data-placement="bottom" title = "Thêm Số Lượng ">+</span>
 										</div>
 										
 									
@@ -177,19 +201,25 @@
 			        
 			 </div>
 		
-			<div class="col-md-4 col-sm-12 ">
-				 <h5 class="tieuDeGioHang">Thông tin khách hàng</h5>
+			<div class="col-lg-3 col-sm-12 ">
+				 <h5 class="tieuDeGioHang" >Thông tin khách hàng</h5>
 				 	
-				 	<form action="" method="post">
+				 <!-- 	<form action="#" method="post"> -->
 				 	
 					  <div class="form-group">
 					      <label for="tenKhachHang">Ten Khach Hang :</label>
-					      <input type="text" class="form-control" id="tenKhachHang" placeholder="Enter Name" name="tenKhachHang">
+					      <input  type="text" class="form-control" id="tenKhachHang" placeholder="Enter Name" name="tenKhachHang"   required>
 					    </div>
 					     <div class="form-group">
 					      <label for="sdt">SĐT Khach Hang :</label>
-					      <input type="text" class="form-control" id="sdt" placeholder="Enter SDT" name="sdt">
+					      <input type="text" class="form-control" id="sdt" placeholder="Enter SDT" name="sdt" required pattern="[0][0-9]{9}" title="Nhập lại SĐT" >
 					    </div>
+					    
+					     <div class="form-group">
+					      <label for="email">Email Khach Hang :</label>
+					      <input type="email" class="form-control" id="email" placeholder="Enter Email" name="email" required >
+					    </div>
+					    
 			 			
 			 			 <div class="form-check">
 							  <label class="form-check-label active">
@@ -204,15 +234,15 @@
 			 			
 			 			   <div class="form-group">
 					      <label for="diachiGiaoHang">Địa chỉ nhận hàng :</label>
-					      <input type="text" class="form-control" id="diachiGiaoHang" placeholder="Enter Address" name="diachiGiaoHang">
+					      <input type="text" class="form-control" id="diachiGiaoHang" placeholder="Enter Address" name="diachiGiaoHang" required>
 					    </div>
 			 			
 			 			<div class="form-group">
 					  <label for="GhiChu">Comment:</label>
 					  <textarea class="form-control" rows="5" id="GhiChu" name="GhiChu"></textarea>
 					</div>
-					 <button type="submit" class="btn btn-primary">Đặt hàng</button>
-			 </form>
+					 <button type="submit" class="btn btn-primary dathang">Đặt hàng</button>
+			<!--  </form> -->
 			</div> 
 			 </c:if>
 		
@@ -220,13 +250,19 @@
 		 		<div class="col-md-12 text-md-center mt-2 emptyCast ">
 			        	 <img alt="anh shopping" src='<c:url value="/resources/Image/mascot.png" />'>
 			        	 <h5>giỏ hàng trống tiếp tục mua sắm</h5>
-			        <a href="/MiniTest/trangchu" > <button class="btn btn-outline-info"> Về trang chủ</button></a>	
+			        <a href=' <c:url value="/trangchu"/>   '  > <button class="btn btn-outline-info"> Về trang chủ</button></a>	
 			</c:if>
 		
 			 <div class="alert alert-warning alert-dismissible thongBaoHetHang">
 										  <button type="button" class="close" data-dismiss="alert">&times;</button>
 								 	    <strong>Warning!</strong> Số lượng sản phẩm trong kho không đủ  sản phẩm
 				 </div>
+			
+			 <div class="alert alert-success alert-dismissible thongBaoDatHang">
+										  <button type="button" class="close" data-dismiss="alert">&times;</button>
+								 	    <strong>Success!</strong>Đặt hàng thành công Vui lòng Check Email
+				 </div>
+		
 		
 		</div>  <!-- // het row -->
 
@@ -258,18 +294,18 @@
 			
 			<div class="col-sm-4 col-md-4 wow tada">
 				<p><span class="title-footer">LIÊN HỆ</span></p>
-				<span>43 Nguyễn trãi , phường 12, quận 5  TP. Hồ Chí Minh</span>
-				<span>checongbinh@gmail.com</span>
+				<span>43Nam Giang Nam Trực Nam định</span>
+				<span>Doanxuanphi@gmail.com</span>
 				<span>0909489834</span>
 			</div>
 			
 			<div class="col-sm-4 col-md-4 wow tada">
 				<p><span class="title-footer">GÓP Ý</span></p>
-				<form action="" method="post">
+			<!-- 	<form action="" method="post"> -->
 					<input name="tenNhanVien" class="material-textinput" style="margin-bottom: 8px" type="text" placeholder="Email"/>
 					<textarea name="tuoi" style="margin-bottom: 8px" rows="4" cols="50" placeholder="Nội dung"></textarea>
-					<button class="btn btn-primary">ĐỒNG Ý</button>
-				</form>
+					<button class="btn btn-primary review">ĐỒNG Ý</button>
+				<!-- </form> -->
 				
 			</div>
 		</div>
@@ -286,6 +322,18 @@
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
 <script type="text/javascript" src='<c:url value="/resources/Js/jquery-3.2.1.min.js"  />'></script>		
+
+ <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+
+
+<!-- jQuery 1.7.2+ or Zepto.js 1.0+ -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<!-- Magnific Popup core JS file -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.0.0/jquery.magnific-popup.min.js"></script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script type="text/javascript" src='<c:url value="/resources/Js/ConTen.js"  />'></script>
+
 </body>
 </html>

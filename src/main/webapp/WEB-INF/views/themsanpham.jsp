@@ -32,6 +32,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- jQuery -->
  
 <script src="<c:url value="/resources/Js/jquery-2.1.4.min.js"/>"></script>
+
+<!-- hiện ảnh -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.0.0/magnific-popup.min.css">
+
 <!-- //jQuery -->
 <link href='//fonts.googleapis.com/css?family=Roboto:700,500,300,100italic,100,400' rel='stylesheet' type='text/css'/>
 <link href='//fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
@@ -72,7 +76,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</div>
 							</td>
 								<td class="hinhsp" data-masp=" ${value.getMaSanPham() }"> 
-								<img src="<c:url value="/resources/Image/sanpham/${value.getHinhSanPham()}"  />" alt="">
+									<a href="<c:url value="/resources/Image/sanpham/${value.getHinhSanPham()}"  />" class="work-image"> 
+									<img src="<c:url value="/resources/Image/sanpham/${value.getHinhSanPham()}"  />" alt="">
+									</a>
 								</td>
 							<td class="tensp" data-masp=" ${value.getMaSanPham() }"> ${value.getTenSanPham() }</td>
 							<td class="giatien" >${value.getGiaTien() }</td>
@@ -290,12 +296,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
  <script src="<c:url value="/resources/Js/ConTen.js"/>"></script> 
  
  
+ 
  <!-- Bootstrap Core JavaScript -->
    <script src="<c:url value="/resources/Js/bootstrap.min.js"/>"></script>
    <!-- /Bootstrap Core JavaScript -->	   
 <!-- morris JavaScript -->	
 <script src="<c:url value="/resources/Js/raphael-min.js"/>"></script>
 <script src="<c:url value="/resources/Js/morris.js"/>"></script>
+
+<!-- Magnific Popup core JS file -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.0.0/jquery.magnific-popup.min.js"></script>
+<%-- <script type="text/javascript" src='<c:url value="/resources/Js/ConTen.js"  />'></script>
+ --%>
+
 <script>
 	$(document).ready(function() {
 		//BOX BUTTON SHOW AND CLOSE

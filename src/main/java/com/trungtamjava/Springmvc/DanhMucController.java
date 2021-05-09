@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.trungtamjava.Service.DanhMucSanPhamService;
 import com.trungtamjava.Service.SanPhamService;
 import com.trungtamjava.entity.DanhMucSanPham;
+import com.trungtamjava.entity.GioHang;
 import com.trungtamjava.entity.SanPham;
 
 @Controller
@@ -39,11 +40,23 @@ public class DanhMucController {
 	List<SanPham> listDMByID = danhmucSPService.getListCatetogryById(id);
 		m.addAttribute("tendanhmuc",tendanhmuc);
 	
-		
+		// Tên cac dm
 		m.addAttribute("danhmucsanpham",list);
 		m.addAttribute("danhmucsanphamOfDM",listDMByID);
 		
-//		List<SanPham> listDMByIDAjax = apiC.ListSPAjax();
+		
+		if (httpSession.getAttribute("user")!=null) {
+			String email = (String) httpSession.getAttribute("user");
+			String chucaidau = email.substring(0, 1);
+			m.addAttribute("chucaidau", chucaidau);
+			
+		}
+		
+		if (null !=httpSession.getAttribute("giohang") ) {
+			List<GioHang> listGioHangs = (List<GioHang>) httpSession.getAttribute("giohang");
+		m.addAttribute("SumCast",listGioHangs.size());
+		}
+//		
 //		m.addAttribute("listDMByIDAjax",listDMByIDAjax);
 //		if (listDMByIDAjax.size()!=0) {
 //			m.addAttribute("tendmClick",listDMByIDAjax.get(0).getDanhMucSanPham().getTenDanhMuc());

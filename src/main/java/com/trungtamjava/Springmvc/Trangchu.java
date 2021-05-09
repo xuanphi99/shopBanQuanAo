@@ -30,7 +30,7 @@ import com.trungtamjava.entity.SanPham;
 
 
 @Controller
-@RequestMapping("/trangchu")
+@RequestMapping( path = {"/trangchu","/"})
 public class Trangchu {
 
 	
@@ -54,6 +54,7 @@ public class Trangchu {
 	List<SanPham> listsanPhams = sanPhamService.listSanPham(0);
 
 	map.addAttribute("listSanPham", listsanPhams);
+	map.addAttribute("SizelistSanPham", listsanPhams.size());
 	
 	// luu session gio hang
 

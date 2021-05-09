@@ -47,7 +47,7 @@
    			<input id="matkhau"  name="matkhau" class="material-textinput input-icon-password csschung matkhau" placeholder="Mật khẩu " type="text" /><br/>
    									<input type="checkbox" class="showmk"   " /> show password  <br>
    			<button  class="material-primary-button csschung btnDangNhap" > ĐĂNG NHẬP  </button> 	
-   			 <a href="/MiniTest/trangchu">	 
+   			 <a href=' <c:url value="/trangchu"/>   ' >	 
    			 <button  class="material-primary-button csschung CancelDangNhap" > Cancel</button>
    			 </a>
    			  

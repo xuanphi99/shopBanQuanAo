@@ -1,5 +1,113 @@
 	$(document).ready(function() {
-			
+		
+		
+	//animate Logo
+		
+		let animation = anime({
+		    targets: '.fname',
+		    opacity: 1,
+
+		    translateY: [-50,0], 
+		    rotate: {
+		      value: 360,
+		      duration: 3000,
+		      easing: 'easeInExpo'
+		    }, 
+		    scale: anime.stagger([0.7, 1], {from: 'center'}), 
+		    delay: anime.stagger(100, {start: 1000}), 
+		    translateX: [-10, 30],
+		    endDelay: 1500,
+
+		    direction: 'alternate',
+
+		    loop : true
+		  }); 
+		
+	//review gop y
+		 $('.review').click(function () {
+			 swal("Thông Báo!", "Cảm ơn bạn đã phản hồi! :)) ");
+
+			 
+		 })
+
+		
+		
+		// click me
+		
+		 $('.clickme').click(function () {
+			 swal("Thông Báo!", "Rất Tiếc đã hết Sản Phẩm! :)) ");
+
+			 
+		 })
+	
+		
+		
+		// check so uong gio hang Cast
+		
+		itemCount  = $('#giohang').text();
+		console.log(itemCount +" f");
+		if(itemCount == 0){
+			$('#giohang').hide();
+		}
+		
+		
+		//load more
+		$('.itemsanPham').hide();
+		 $('.itemsanPham').slice(0, 4).show();
+		 
+		
+		 
+
+			 countItem = $('.itemsanPham').attr("data-Countitem-Show");
+			 
+			  countItem = parseInt(countItem);
+			  
+			  $(".itemsanPham").slice(0, 4).show();
+			    $("#loadMore").on('click', function (e) {
+			        e.preventDefault();
+			        $(".itemsanPham:hidden").slice(0, 4).slideDown();
+			   
+			        
+			        if ($(".itemsanPham:hidden").length == 0) {
+			            $("#load").fadeOut('slow');
+			        }
+			        $('html,body').animate({
+			            scrollTop: $(this).offset().top
+			        }, 1500);
+			        
+			        // check de hidden load more
+			        if($('.itemsanPham').length == countItem ){
+						  $("#loadMore").hide();
+					  }
+					  else {
+						  countItem = countItem +4;
+						  $('.itemsanPham').attr("data-Countitem-Show", countItem);
+						  
+					  }
+			        
+			    });
+			  
+	//	  });
+		 
+		 
+		 //back to top
+		
+		 $('a[href=#top]').click(function () {
+			    $('body,html').animate({
+			        scrollTop: 0
+			    }, 1000);
+			    return false;
+			});
+		 
+		 $(window).scroll(function () {
+			    if ($(this).scrollTop() > 50) {
+			        $('.totop a').fadeIn();
+			    } else {
+			        $('.totop a').fadeOut();
+			    }
+			}); 
+		 
+		
 		$('.btnDangNhap').click(function(event) {
 		var email = $('.email').val(); 
 		var matkhau = $('.matkhau').val();
@@ -18,8 +126,10 @@
 				
 			 	$('#kqdn').text('Dang nhap thanh cong');
 				var  urlCurrent = 	window.location.href;
-				var urlWise = urlCurrent.replace("dangnhap/","trangchu/");
+				var urlWise = urlCurrent.replace("dangnhap","trangchu");
 				window.location = urlWise;
+				console.log(urlCurrent);
+				console.log(urlWise);
 			  }
 			  else {
 			  	$('#kqdn').text('Dang nhap that bai');
@@ -76,9 +186,9 @@
 				  	$('.email').val(emaildk); 
 				  	$('.matkhau').val(matkhaudk); 
 				  	$('.btnDangNhap').trigger('click'); 
-//				var  urlCurrent = 	window.location.href;
-//				var urlWise = urlCurrent.replace("dangnhap/","trangchu/");
-//				window.location = urlWise;
+				var  urlCurrent = 	window.location.href;
+				var urlWise = urlCurrent.replace("dangnhap","trangchu");
+				window.location = urlWise;
 				  }
 				  else {
 					  if (IsEmail(emaildk)==false) {
@@ -187,11 +297,17 @@
 				    	
 		  },
 			success : function(value) {
+				$('#giohang').show();
 				$("#giohang").addClass("sumCast");
-				$("#giohang").html("<span>" + value + "</span>") ;
-			
+			//	$("#giohang").html("<span>" + value + "</span>") ;
+				$("#giohang").html(value);
 				
 				$('.Messenger').show();
+				
+				 $('body,html').animate({
+				        scrollTop: 0
+				    }, 1000);
+				
 			}
 			
 			
@@ -215,24 +331,37 @@
 // click load danhmuc
 
 
-	 $('.clickdm').hide();
+		$('.clickdm').hide();	//an khoi danh muc dl
 $('.DM').click(function(event) {
 		var MaDanhMuc =$(this).attr("data-idDM");
 		var TenDanhMuc =$(this).text();	
+		$('.pageDetail8').hide();
+		$('.pageDetail2').hide();
 	console.log(MaDanhMuc+" "+ TenDanhMuc);
 			$.ajax({
 				url: '/MiniTest/api/loaddanhmuc',
 					type: 'GET',
-					dataType : 'json',
+//					dataType : 'json',
+// ben ajax controller de produces = "text/plain" len datatype k dc de json
 					data: {
 					MaDanhMuc: MaDanhMuc,
 		    		TenDanhMuc: TenDanhMuc
 		  },
-			success : function(value) {
-				 
-				$('.tuLoad').hide();	
-				// $('.clickdm').show();	
-				window.location = "http://localhost:8080/MiniTest/danhmuc/"+MaDanhMuc+"/"+TenDanhMuc;
+			success : function(value,status) {
+				
+				if(value == 0){
+					console.log("0");
+					$('.tuLoad').hide();
+					$('.clickdm').show();
+				}
+				else {
+				$('.tuLoad').hide();
+				
+				$('.clickdm').empty();
+				$('.clickdm').append(value);
+				$('.clickdm').show();	
+			}
+			//	window.location = "http://localhost:8080/MiniTest/danhmuc/"+MaDanhMuc+"/"+TenDanhMuc;
 			
 			}
 		})
@@ -240,7 +369,7 @@ $('.DM').click(function(event) {
 	});	
 	
 	
-	
+
 	
 	
 // hàm tính tng tien khi vừa load vào page gioHang
@@ -314,13 +443,33 @@ $('.DM').click(function(event) {
 		//  xoas 1 sp trong gio hang
 		
 		$('.btn-de').click(function(event) {
+			
+	// link : https://sweetalert.js.org/guides/#getting-started	
+			swal({
+				  title: "Bạn chắc chắn?",
+				  text: "Xóa Sản phẩm khỏi giỏ hàng!",
+				  icon: "warning",
+				  buttons: true,
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+					  //xoa
+				    swal("Poof! Đã xóa sản phẩm khỏi giỏ hàng!", {
+				      icon: "success",
+				    });
+				
+			
+			
+			
+			
 			var This = $(this);
 			var masp= 	$(this).parent().siblings('.tensp').attr("data-masp");
 			var mamau=  $(this).parent().siblings('.mau').attr("data-MaMau");
 			var masize= $(this).parent().siblings('.size').attr("data-maSize");
 			console.log("ma size= "+ masize +" ma sp = "+masp+" ma mau  "+ mamau );
 			var sum =parseInt($('#giohang').text());
-	
+			console.log("tong so luong  = "+ sum);
 			$(this).parent().parent().remove();
 			SumOfCastLoader();
 			
@@ -328,9 +477,11 @@ $('.DM').click(function(event) {
 				$('#giohang').html(sum-1);
 			
 			if (sum==1) {
-				window.location.href = "/MiniTest/giohang";
+
+					window.location.href = "/MiniTest/giohang";	
+				
 			}
-			
+//			
 			
 			$.ajax({
 				url: '/MiniTest/api/xoasp',
@@ -343,12 +494,115 @@ $('.DM').click(function(event) {
 						
 		  },
 			success : function(value) {
-				
+				console.log(value);
 			}
 	
 		}); // het ajax
+			
+				  }  // het xoa
+				  else {
+					  //khong xoa
+				   
+		 }
+		}); // het alert xac nhan xoa sp
 		
 	})		// end xoa sp
+
+//check number phone	
+
+	function checkPhone(number){
+		var vnf_regex = /((09|03|07|08|05)+([0-9]{8})\b)/g;
+		 if(number !==''){
+		        if (vnf_regex.test(number) == false) 
+		        {
+		            alert('Số điện thoại của bạn không đúng định dạng!');
+		            return false
+		        }else{
+		          
+		            return true;
+		        }
+		    }else{
+		        alert('Bạn chưa điền số điện thoại!');
+		        return false;
+		    }
+		}
+	
+	
+//end checknumber phone
+
+		//check email
+		function validateEmail(email) 
+	    {
+	        var re = /\S+@gmail.com/;
+	        return re.test(email);
+	    }
+	    
+	
+		//end check mail
+		
+		
+	//Cick dat hang
+	$('.dathang').click(function(event) {
+	//	event.preventDefault();
+		
+		var tenKhachHang= $('#tenKhachHang').val();
+		var sdt= $('#sdt').val();
+		var email= $('#email').val();
+		var diachiGiaoHang= $('#diachiGiaoHang').val();
+		var GhiChu= $('#GhiChu').val();
+		
+		var hinhthucGiaoHang = $("input[name='hinhthucGiaoHang']:checked").val();
+		
+		
+		if(tenKhachHang === '' ){
+			swal("Thông Báo!", "Nhập lại Tên KH!");
+
+		}
+		else if(!checkPhone(sdt)){
+			swal("Thông Báo!", " Nhập lại SDT!");
+
+		}
+		else if(!validateEmail(email)){
+			swal("Thông Báo!", " Nhập lại Email!");
+
+		}
+		
+	
+		
+		else {
+		
+		$.ajax({
+			url: '/MiniTest/api/dathang',
+				type: 'POST',
+				
+				data: {
+					tenKhachHang:tenKhachHang,
+			    	sdt:sdt,
+			    	email:email,
+			    	diachiGiaoHang: diachiGiaoHang,
+			    	GhiChu : GhiChu,
+			    	hinhthucGiaoHang: hinhthucGiaoHang
+	  },
+		success : function(value) {
+			if(value == 'true'){
+				$('.thongBaoDatHang').addClass('HienthongBaoDatHang');
+				swal("Thông Báo !","Đặt hàng thành công!", "success");
+				
+			}
+			else {
+				$('.thongBaoDatHang').removeClass('HienthongBaoDatHang');
+			}
+			
+		}
+
+	}); // het ajax
+} // het else	
+		
+	})
+	
+	// het cick dat hang
+	
+	
 	
 	//phan trang
 	
@@ -451,7 +705,7 @@ $('.DM').click(function(event) {
 
 		}
 				else {
-					console.log("ngu vl");
+					console.log("sai");
 				}
 		});
 			
@@ -698,6 +952,7 @@ $('.DM').click(function(event) {
 					var tbodysanpham = $("#table-sanpham").find("tbody");
 					tbodysanpham.empty();
 					tbodysanpham.append(value);
+					
 				}
 			})
 	}	
@@ -810,7 +1065,7 @@ $('.DM').click(function(event) {
 					
 				var tong =	 dinhdangCurrent(tongdon);
 					 
-						$('.TongTienDonHang').html("tong tiền "+ tong + " VNĐ");
+						$('.TongTienDonHang').html("Tổng tiền "+ tong + " VNĐ");
 
 						
 						return tong;
@@ -818,7 +1073,12 @@ $('.DM').click(function(event) {
 					 
 			}
 		
-		
+		//click detail img
+		 $('.work-image').magnificPopup({
+			
+		      type: 'image'
+		      
+		    });
 		
 		
 	});

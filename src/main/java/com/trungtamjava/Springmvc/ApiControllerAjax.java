@@ -1,7 +1,9 @@
 package com.trungtamjava.Springmvc;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -31,12 +33,17 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonObjectFormatVisitor;
+import com.trungtamjava.Service.ChiTietHoaDonService;
 import com.trungtamjava.Service.DanhMucSanPhamService;
+import com.trungtamjava.Service.HoaDonService;
 import com.trungtamjava.Service.NhanVienService;
 import com.trungtamjava.Service.SanPhamService;
+import com.trungtamjava.entity.ChiTietHoaDonId;
 import com.trungtamjava.entity.ChiTietSanPham;
+import com.trungtamjava.entity.ChiTiethoaDon;
 import com.trungtamjava.entity.DanhMucSanPham;
 import com.trungtamjava.entity.GioHang;
+import com.trungtamjava.entity.HoaDon;
 import com.trungtamjava.entity.Json_SanPham;
 import com.trungtamjava.entity.MauSanPham;
 import com.trungtamjava.entity.NhanVien;
@@ -59,6 +66,12 @@ public class ApiControllerAjax {
 	@Autowired
 	SanPhamService sanphamService;
 	
+	@Autowired
+	HoaDonService hoadonservice;
+	
+	@Autowired
+	ChiTietHoaDonService chiTietHoaDonService;
+
     @GetMapping("XuLyDangNhap")
     @ResponseBody
     public String XuLyDangNhap(@RequestParam String email , @RequestParam String matkhau, ModelMap map) {	 
@@ -75,8 +88,6 @@ public class ApiControllerAjax {
 		boolean ktEmail = validate(email);
 	  	String kqDk = "false";
 	  	if (ktEmail) {
-	  		
-	  		
 	  		
 	  		
 				 if (matkhau.equals(nhaplaimatkhau)&& isValid(matkhau)==0) {
@@ -225,21 +236,145 @@ public class ApiControllerAjax {
 			
 		 } 
 		 
+		 // Dat hang  trong gio hang 
+		 @PostMapping("dathang")
+		 @ResponseBody
+		 public String DatHang(
+				 HttpSession httpSession ,
+					@RequestParam	String tenKhachHang,
+					@RequestParam	String sdt ,
+					@RequestParam	String email ,
+					@RequestParam	String diachiGiaoHang ,
+					@RequestParam	String hinhthucGiaoHang,
+					@RequestParam	String GhiChu
+				 
+				 ) {
+				
+				// kiem tra xem gio hang co null ko
+				if (null !=httpSession.getAttribute("giohang") ) {
+					
+					
+					
+					List<GioHang> listGioHangs = (List<GioHang>) httpSession.getAttribute("giohang");
+					
+					//một Hóa đơn cần cátc huộc tính trên lấy từ form khi submit
+					// các thuộc tính còn lại lấy trong gio Hang
+					
+					HoaDon hoaDon = new HoaDon();
+					hoaDon.setTenKhachHang(tenKhachHang);
+					hoaDon.setSdt(sdt);
+					hoaDon.setDiachiGiaoHang(diachiGiaoHang);
+					hoaDon.setHinhthucGiaoHang(hinhthucGiaoHang);
+					hoaDon.setGhiChu(GhiChu);
+					hoaDon.setNgayLap(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+			// 1 hD cần 1 List ChiTietHD
+			 // Mà ChiTietHD cần ChiTietHoaDonId 
+			// mà ChiTietHoaDonId cần mã ChiTietSP
+			// Lấy mã ChiTietSP trong GioHang sd forEach
+					
+			// hd cần lưu 1 list chitiet HD	
+					
+			int idHD = 	hoadonservice.themHD(hoaDon);
+					
+			if (idHD>0) {
+
+				Set<ChiTiethoaDon> chiTiethoaDons = new HashSet<ChiTiethoaDon>();
+				
+				for (GioHang i : listGioHangs) {
+					ChiTietHoaDonId chiTietHoaDonId = new ChiTietHoaDonId();
+					chiTietHoaDonId.setMachiTietSanPham(i.getMachitiet());
+					chiTietHoaDonId.setMahoaDon(hoaDon.getMahoaDon());
+					// gán ChiTietHoaDonId  vào ChiTiethoaDon
+					
+					ChiTiethoaDon chiTiethoaDon = new ChiTiethoaDon();
+					chiTiethoaDon.setChiTietHoaDonId(chiTietHoaDonId);
+					chiTiethoaDon.setGiaTien(i.getGiaSP());
+					chiTiethoaDon.setSoLuong(i.getSoLuong());
+				//	chiTiethoaDons.add(chiTiethoaDon); vì chiTietHdId có mã sp chi tiet ko kết nối đc với bảng Hd	4
+				//	hoaDon.setDanhsachchitiethoadon(chiTiethoaDons);
+				// khắc phục
+				chiTietHoaDonService.ThemChiTietHoaDon(chiTiethoaDon);
+				}
+				
+				System.out.println("yes");	
+				return "true";
+				
+			}
+			
+			
+		
+				System.out.println("that bai ");
+				return "false";
+				
+			
+			
+
+					
+				
+				
+					
+				
+					
+			     }  // kiem tra null session
+				return "false";
+				
+				
+			
+			
+				
+			 
+			 
+			
+		 } // het DatHang
 		 
 		 
 		 //load danhmuc
 		 
-		 @GetMapping("loaddanhmuc")
+		 @GetMapping(path = "loaddanhmuc", produces="text/plain; charset=utf-8")
 		 @ResponseBody
 		 public String LoadDM(@RequestParam int MaDanhMuc,@RequestParam String TenDanhMuc  ) {
 			 listDMByID.clear();
 				 listDMByID = danhmucSPService.getListCatetogryById(MaDanhMuc);
 			tenDM = TenDanhMuc;
 				for (SanPham i : listDMByID) {
-					System.out.println("ten sp trÃªn api "+i.getTenSanPham());
+					System.out.println("ten sp trong api "+i.getTenSanPham());
 				}
+				String str  = "";
+				if (listDMByID.size() == 0) {
+					str = " <h3> Danh mục trống </h3>";	
+				}
+				//khi dm có sp thì trả về list dm theo dang html
+				else {
+				str = str + " <h3> " + TenDanhMuc + " </h3> ";
+				str  = str +	"<div class='container'>";
+				str  = str +    "<div class='row'>";
+				double  y = 0.1; 
+				for (SanPham i : listDMByID) {
+					
+
+					String urlAnh = "http://localhost:8080/MiniTest/resources/Image/sanpham/"+i.getHinhSanPham();
+					y= y+ 0.05;
+					str = str + "<div class='col-md-4 col-lg-3 col-sm-6  '> ";
+					str = str + " <div class=\"card text-center wow fadeInDown \"  data-wow-delay=\" "+y+" s \"  > ";
+					str = str + " <a href=' "+urlAnh+" ' class=\"work-image\">  ";
+					str = str + " <img class='card-img-top' src='"+urlAnh+"'  alt='Card image cap'>  ";
+					str = str + " </a> ";
+					str = str + " <div class=\"card-body\"> ";
+					str = str + " <h4 class=\"card-title tensp\"> " +i.getTenSanPham()  +" </h4>  ";
+					str = str + " <p class=\"card-text giasp\"> " + i.getGiaTien() +" VNĐ</p>  ";
+					str = str + " <a href='/MiniTest/chitietsanpham/" +i.getMaSanPham() +"' class=\"btn btn-info nutsp\"> Xem chi tiết</a> ";
+					str = str + " </div> ";
+					str = str + " </div> ";
+					str = str + " </div> ";
+				}
+				str = str + " </div> ";
+				str = str + " </div> ";
 				
-				return listDMByID.size()+"";	
+					
+					
+				}
+				// hết else
+				return str;
 		 }
 		 
 		 @GetMapping(path="PhanTrang", produces="text/plain; charset=utf-8")
