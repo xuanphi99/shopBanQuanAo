@@ -1,6 +1,17 @@
 	$(document).ready(function() {
+	
+		//tabe
+		$('#example').DataTable();
 		
+	//click logout
+		 $('.cancelDN').click(function () {
+			history.back();
+
+			 
+		 })
+
 		
+	
 	//animate Logo
 		
 		let animation = anime({
@@ -45,27 +56,43 @@
 		// check so uong gio hang Cast
 		
 		itemCount  = $('#giohang').text();
-		console.log(itemCount +" f");
+		
 		if(itemCount == 0){
 			$('#giohang').hide();
 		}
 		
-		
-		//load more
+	//load more
+		var soLuongLoadMore = 0;
+		var distanceLoadMore = 4;
+		var wit =window.innerWidth;
+		//&& $(window).width >= 768
+		console.log(wit);
+		if ( wit < 992 && wit >= 768) {
+			soLuongLoadMore = 3;
+			distanceLoadMore = 3;
+			
+		}
+		else {
+			soLuongLoadMore = 4;
+			distanceLoadMore =4;
+			
+		}
+	
 		$('.itemsanPham').hide();
-		 $('.itemsanPham').slice(0, 4).show();
+		 $('.itemsanPham').slice(0, soLuongLoadMore).show();
 		 
 		
 		 
 
-			 countItem = $('.itemsanPham').attr("data-Countitem-Show");
-			 
+			// countItem = $('.itemsanPham').attr("data-Countitem-Show");
+			 countItem = distanceLoadMore;
 			  countItem = parseInt(countItem);
 			  
-			  $(".itemsanPham").slice(0, 4).show();
+			  $(".itemsanPham").slice(0, soLuongLoadMore).show();
 			    $("#loadMore").on('click', function (e) {
+			    	 countItem = countItem +distanceLoadMore;
 			        e.preventDefault();
-			        $(".itemsanPham:hidden").slice(0, 4).slideDown();
+			        $(".itemsanPham:hidden").slice(0,soLuongLoadMore).slideDown();
 			   
 			        
 			        if ($(".itemsanPham:hidden").length == 0) {
@@ -74,16 +101,12 @@
 			        $('html,body').animate({
 			            scrollTop: $(this).offset().top
 			        }, 1500);
-			        
+			        console.log(countItem+ " "+$('.itemsanPham').length);
 			        // check de hidden load more
-			        if($('.itemsanPham').length == countItem ){
+			        if($('.itemsanPham').length <= countItem ){
 						  $("#loadMore").hide();
 					  }
-					  else {
-						  countItem = countItem +4;
-						  $('.itemsanPham').attr("data-Countitem-Show", countItem);
-						  
-					  }
+
 			        
 			    });
 			  
@@ -106,8 +129,14 @@
 			        $('.totop a').fadeOut();
 			    }
 			}); 
+		 // mat thong bao truoc do
+		 $('.matkhau').focus(function(event) {
+			 $('#kqdn').text('');
+		 });
+		 $('.email').focus(function(event) {
+			 $('#kqdn').text('');
+		 });
 		 
-		
 		$('.btnDangNhap').click(function(event) {
 		var email = $('.email').val(); 
 		var matkhau = $('.matkhau').val();
@@ -125,11 +154,14 @@
 			  if (value == true) {
 				
 			 	$('#kqdn').text('Dang nhap thanh cong');
-				var  urlCurrent = 	window.location.href;
-				var urlWise = urlCurrent.replace("dangnhap","trangchu");
-				window.location = urlWise;
-				console.log(urlCurrent);
-				console.log(urlWise);
+//				var  urlCurrent = 	window.location.href;
+//				var urlWise = urlCurrent.replace("dangnhap","trangchu");
+//				window.location = historyUrl;
+//				console.log(urlCurrent);
+//				console.log(urlWise);
+			 	history.back();
+			 	//location.reload();
+
 			  }
 			  else {
 			  	$('#kqdn').text('Dang nhap that bai');
@@ -158,7 +190,31 @@
 			
 		});
 		
+
 		
+		
+		// xoa thong bao loi
+		 $('#emaildk').focus(function(event) {
+			 $('#ketqua0').text('');
+		 });
+		 
+		 $('#matkhaudk').focus(function(event) {
+			 
+			 $('#ketquadky1').text('');
+			 
+			 
+		 });
+		 
+		 $('.nhaplaimatkhau').focus(function(event) {
+			
+				 $('#ketquadky2').text('');
+			 
+			 
+		 });
+		 
+		
+		 
+		 
 		
 		$('#xulydk').click(function(event) {
 			
@@ -177,7 +233,7 @@
 				},
 				success : function(kqDk) {
 					
-					
+					console.log(kqDk);
 				  if (kqDk ==true) {
 					  $('#ketqua0').text("");  
 					  $('#ketquadky1').text(""); 
@@ -186,9 +242,9 @@
 				  	$('.email').val(emaildk); 
 				  	$('.matkhau').val(matkhaudk); 
 				  	$('.btnDangNhap').trigger('click'); 
-				var  urlCurrent = 	window.location.href;
-				var urlWise = urlCurrent.replace("dangnhap","trangchu");
-				window.location = urlWise;
+//				var  urlCurrent = 	window.location.href;
+//				var urlWise = urlCurrent.replace("dangnhap","trangchu");
+				
 				  }
 				  else {
 					  if (IsEmail(emaildk)==false) {
@@ -204,7 +260,9 @@
 						  $('#ketquadky1').text(""); 
 						  $('#ketquadky2').text(" mat khau khong trung nhau"); 
 						  }
-					
+					  else {
+						  $('#ketqua0').text("email đã đăng ký");  
+					  }
 					  
 				  }
 				}
@@ -377,6 +435,10 @@ $('.DM').click(function(event) {
 		SumOfCastLoader();
   
 		
+		$('.increase').click(function(event) {
+			alert("gg");
+		});
+		
 		
 		$('.giohang_SoLuong').click(function(event) {
 			
@@ -403,13 +465,20 @@ $('.DM').click(function(event) {
 // xử lí khi thay đổi số lượng giỏ hàng
 		$('.giohang_SoLuong').change(function(event) {
 	var sum  = 		$(this).val();
+	
+	// so luong khi ng dung dat hang luc dau sau do neu dat qua so luong thi reset ve so luong nay
+	
+	var countPrev = $(this).attr("data-countPrev");
+	
 	var soLuongKho =$(this).attr("data-SoLuongKho");
 	console.log(sum+" "+soLuongKho); 
 	if (parseInt(sum)<=parseInt(soLuongKho)) {
 	
-	
-			 SoLuongKhoClick= 1;
+		// nếu dat thanh cong thi luu vet
+		countPrev = sum;
 		
+			 SoLuongKhoClick= 1;
+		$(this).attr("data-countPrev",countPrev);
 		
 		var costtmp1 = 	    $(this).parent().parent().siblings('.giaTien').attr("data-giaTien"); 
 		var tien = format(sum,costtmp1);
@@ -436,6 +505,11 @@ $('.DM').click(function(event) {
 			}
 		}) // het xử lí ajax lưu thay đổi
 		
+	}
+	else {
+		swal("Thông Báo!", "Không nhập quá số lượng =!" +soLuongKho );
+		$(this).val(countPrev);
+
 	}
 			
 		});
@@ -545,6 +619,52 @@ $('.DM').click(function(event) {
 	$('.dathang').click(function(event) {
 	//	event.preventDefault();
 		
+		var login = $('.itemphai ').attr("data-login");
+		console.log(login);
+		//yc login trc khi dat hang
+		
+		if (login ==='') {
+
+			swal("Good job!","Bạn cần  đăng nhập để thực hiện đặt hàng!","info")
+			.then((value) => {
+			//  swal(`The returned value is: ${value}`);
+			  // hoi toi trang login ko
+			  
+			  if (`${value}` !== 'null') {
+				
+					swal({
+						  title: "Thông báo!",
+						  text: "Đi tới trang đăng nhập",
+						  icon: "warning",
+						  buttons: true,
+						  dangerMode: true,
+						})
+						.then((willDelete) => {
+						  if (willDelete) {
+							  // Tới trang đăng nhập 
+							  historyUrl = window.location.href;
+							  window.location.href = "/MiniTest/dangnhap";
+							 
+						//	  history.back();
+
+						  }
+						  // ko toi trang dang nhap
+						  else {
+						   
+						  }
+						});
+				  
+			}
+			  
+			  
+			});
+			
+			
+
+			
+		}
+	// da login	
+		else {
 		var tenKhachHang= $('#tenKhachHang').val();
 		var sdt= $('#sdt').val();
 		var email= $('#email').val();
@@ -597,7 +717,7 @@ $('.DM').click(function(event) {
 
 	}); // het ajax
 } // het else	
-		
+		} // checklogin
 	})
 	
 	// het cick dat hang

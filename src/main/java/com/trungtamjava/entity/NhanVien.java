@@ -8,6 +8,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotBlank;
+
 @Entity(name = "nhanvien")
 public class NhanVien {
 			
@@ -22,8 +26,12 @@ public class NhanVien {
 	@JoinColumn(name = "maChucVu")
 	ChucVu chucVu;
 	
+	@NotBlank
+	@Email
 	String email ;
 	String tenDangNhap ;
+	@NotBlank
+	@Length(min = 8)
 	String matKhau ;
 	public int getMaNhanVien() {
 		return maNhanVien;

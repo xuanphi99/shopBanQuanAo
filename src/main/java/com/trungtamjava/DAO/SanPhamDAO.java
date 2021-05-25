@@ -40,7 +40,7 @@ public class SanPhamDAO implements SanPhamIlm {
 		else {
 			
 			String sql	= "from sanpham";
-			list = (List<SanPham>)session.createQuery(sql).setFirstResult(start).setMaxResults(20).getResultList();
+			list = (List<SanPham>)session.createQuery(sql).setFirstResult(start).setMaxResults(3).getResultList();
 
 		}
 		

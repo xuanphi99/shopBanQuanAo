@@ -7,7 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<jsp:include page="header.jsp"/>
+<%-- 
 <link href="<c:url value="/resources/Bootstrap/bootstrap.min.css"/>"
 	rel="stylesheet">
 <link href="<c:url value="/resources/css/styleTrangchu.css"/>"
@@ -24,7 +25,7 @@
 	src='<c:url value="/resources/css/wow.min.js"  />'></script>
 <script>
 	new WOW().init();
-</script>
+</script> --%>
 
 
 </head>
@@ -266,7 +267,7 @@
 
 
 	<!-- // Cac thu vien can sap xep the tt -->
-
+<%-- 
 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>
@@ -295,6 +296,6 @@
 
 
 	<script type="text/javascript"
-		src='<c:url value="/resources/Js/ConTen.js"  />'></script>
+		src='<c:url value="/resources/Js/ConTen.js"  />'></script> --%>
 </body>
 </html>

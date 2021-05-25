@@ -7,8 +7,8 @@
 <head>
 <meta http-equiv='Content-Type' content='text/html; charset=UTF-8' />
 <title>Gio hang</title>
-
-<link  href="<c:url value="/resources/Bootstrap/bootstrap.min.css"/>" rel="stylesheet">
+<jsp:include page="header.jsp"/>
+<%-- <link  href="<c:url value="/resources/Bootstrap/bootstrap.min.css"/>" rel="stylesheet">
 <link  href="<c:url value="/resources/css/styleTrangchu.css"/>" rel="stylesheet">
 <link  href="<c:url value="/resources/css/animate.min.css"/>" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
@@ -16,13 +16,16 @@
 <!-- hiện ảnh -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.0.0/magnific-popup.min.css">
 
+<!-- talbe -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+
 
 <script type="text/javascript" src='<c:url value="/resources/css/wow.min.js"  />'></script>
 
 
 
 <script> new WOW().init(); </script>
-
+ --%>
 
 </head>
 <body>
@@ -78,11 +81,11 @@
       </li>
       </ul> 
 <!--       het iemtrai -->
-     <ul  class="navbar-nav itemphai ">
+     <ul  class="navbar-nav itemphai " data-login="${chucaidau}">
 				<c:choose>
 					<c:when test="${chucaidau != null }">
 			<li class="nav-item ">
-			<a class=" nav-link circle-avartar" href=' <c:url value="/giohang"/>   '>
+			<a class=" nav-link circle-avartar" href=' <c:url value="/dangnhap"/>   '>
 			<span> ${chucaidau }</span>
 			</a>
 			
@@ -139,7 +142,7 @@
 			
 			
 			        <h5 class="tieuDeGioHang">Thông tin giỏ hàng</h5>
-				<table class="table">
+				<table class="table" id= "">
 					<thead>
 						<tr>
 							<td><h5>Hinh san pham</h5></td>
@@ -148,6 +151,7 @@
 							<td><h5>Mau san pham</h5></td>
 							<td><h5>so luong</h5></td>
 							<td><h5>Gia tien</h5></td>
+							<td><h5>Xử  lý</h5></td>
 						</tr>
 					</thead>	
 	
@@ -173,7 +177,7 @@
 										
 									<div class="input-group nhomSoLuong">
 										<span class="decrease"  title = "Giảm Số Lượng " >-</span>
-											<input type="number" min="1" max="${ListGioHang.getSoLuongTrongKho()}" value="${ListGioHang.getSoLuong() }" class="input giohang_SoLuong"  data-SoLuongKho="${ListGioHang.getSoLuongTrongKho()}" />
+											<input type="number" min="1" max="${ListGioHang.getSoLuongTrongKho()}" value="${ListGioHang.getSoLuong() }" class="input giohang_SoLuong" data-countPrev="${ListGioHang.getSoLuong() }"  data-SoLuongKho="${ListGioHang.getSoLuongTrongKho()}" />
 									
 										<span class="increase"  data-toggle="tooltip" data-placement="bottom" title = "Thêm Số Lượng ">+</span>
 										</div>
@@ -315,7 +319,7 @@
 			<!-- end footer  -->
 		
 		
-	
+<%-- 	
 
 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -333,7 +337,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.0.0/jquery.magnific-popup.min.js"></script>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script type="text/javascript" src='<c:url value="/resources/Js/ConTen.js"  />'></script>
+<!-- table -->
 
+<script type="text/javascript" charset="utf8" src="<c:url value="/resources/Js/jquery.dataTables.js"/>"></script>
+<script type="text/javascript" src='<c:url value="/resources/Js/ConTen.js"  />'></script>
+ --%>
 </body>
 </html>

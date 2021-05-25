@@ -2,6 +2,8 @@ package com.trungtamjava.DAO;
 
 import java.io.Serializable;
 
+import javax.persistence.NoResultException;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,31 +26,57 @@ public class NhanVienDAO implements NhanVienImpliment{
 	
 	
 	@Transactional
-	 public boolean XuLyDangNhap( String email , String matkhau) {
+	 public NhanVien XuLyDangNhap( String email , String matkhau) {
 		  // xu ly lay csdl them transtional
 		    // sd sessionFactory 
 		    // sd AutoWire
 		    	Session session = se.getCurrentSession();
 //		    	
+		    	
+					
+			
+		    	if (matkhau.equals("*")) {
+
+		    		NhanVien nv = null;
+		    		try {
+		    			
+			    		String sql = "from nhanvien Where email= ?   ";	
+			    		 nv = (NhanVien) session.createQuery(sql).setParameter(0,email).getSingleResult();	
+					// bat error
+		    		} catch (NoResultException e) {
+						return null;
+					}
+		    		
+		    		
+		    		return nv;
+				
+		    	
+		    	}
+		    
+		    		
+		    	
+		    	else {
+		    		
 		    	try {
 		    	NhanVien  nv	= (NhanVien) session.createQuery("from nhanvien Where email='"+email +"' and  matkhau='"+matkhau+"'" ).getSingleResult();
 		    	//	String sql = "from nhanvien Where email= :p1 and matKhau= :p2 ";
 		    	// String sql = "from nhanvien Where email= ? and matKhau= ? ";
 		    	// NhanVien nv = (NhanVien) session.createQuery(sql).setParameter(0,email).setParameter(1, matkhau).getSingleResult();
 //		    	
-		    	if (nv!=null) {
-		    		return true;
-				}
-		    	else {
-					return false;
-				}
-		      
+//		    	if (nv!=null) {
+//		    		return true;
+//				}
+//		    	else {
+//					return false;
+//				}
+		      return nv;
 				} catch (Exception ex) {
-					 return false;
+			
+			}
 		
 					  
 				}
-		    		 
+		    		return null; 
 		
 	 }
 
@@ -56,12 +84,39 @@ public class NhanVienDAO implements NhanVienImpliment{
 	public boolean XuLyDangKy(NhanVien nhanVien) {
 		
 		Session session = se.getCurrentSession();
-		int maNhanVien =  (Integer) session.save(nhanVien);
-		if(maNhanVien > 0){
-			return true;
-		}else{
-			return false;
+		
+		
+		try {
+			NhanVien nVien = new NhanVien();
+			 nVien = XuLyDangNhap(nhanVien.getEmail(), "*");
+			
+			 //nếu emai chưa từng dky
+			if (nVien == null ) {
+				
+			
+			int maNhanVien =  (Integer) session.save(nhanVien);
+			
+			if(maNhanVien > 0){
+				return true;
+			}
+				
 		}
+			
+			
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			return false;
+		}	
+		return false;
+		
+	}
+
+	@Transactional
+	public void updateNV(NhanVien nhanVien) {
+		Session session = se.getCurrentSession();
+		System.out.println(nhanVien.getMaNhanVien());
+		 session.update(nhanVien);
 		
 	}
 }

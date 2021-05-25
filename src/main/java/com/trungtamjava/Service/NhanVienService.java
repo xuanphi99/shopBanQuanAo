@@ -13,7 +13,7 @@ public class NhanVienService implements NhanVienImpliment {
 	@Autowired
 	private NhanVienDAO nVienDAO;
 
-	public boolean XuLyDangNhap(String email, String matkhau) {
+	public NhanVien XuLyDangNhap(String email, String matkhau) {
 	 
 	return	nVienDAO.XuLyDangNhap(email,matkhau);
 	
@@ -25,6 +25,11 @@ public class NhanVienService implements NhanVienImpliment {
 		boolean ktrathem = nVienDAO.XuLyDangKy(nhanVien);
 
 		return ktrathem;
+	}
+
+	public void updateNV(NhanVien nhanVien) {
+		nVienDAO.updateNV(nhanVien);
+		
 	}
 	
 	

@@ -7,8 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
-<link href="<c:url value="/resources/Bootstrap/bootstrap.min.css"/>"
+<jsp:include page="header.jsp"/>
+<%-- <link href="<c:url value="/resources/Bootstrap/bootstrap.min.css"/>"
 	rel="stylesheet">
 <link href="<c:url value="/resources/css/styleTrangchu.css"/>"
 	rel="stylesheet">
@@ -27,7 +27,7 @@
 	src='<c:url value="/resources/css/wow.min.js"  />'></script>
 <script>
 	new WOW().init();
-</script>
+</script> --%>
 
 
 </head>
@@ -198,7 +198,7 @@
  -->
 
 	<!--  phan sp hot -->
-	<div id="title-sanpham " class="container">
+	<div  class="container" id="title-sanpham ">
 		<span class="sphot">SẢN PHẨM HOT</span>
 		<div class="row">
 			<%
@@ -208,7 +208,7 @@
 				<%
 					x = x + 0.05;
 				%>
-				<div class="col-md-4 col-lg-3 col-sm-6 itemsanPham "
+				<div class=" col-6 col-sm-6 col-md-4 col-lg-3 itemsanPham "
 					data-attr="${SizelistSanPham}" data-Countitem-Show="4">
 					<div class="card text-center wow animate__zoomIn "
 						data-wow-delay="<%=x%>s">
@@ -230,18 +230,18 @@
 				</div>
 			</c:forEach>
 
-			<a href="#" id="loadMore">Load More</a>
-
-			<p class="totop">
-				<a href="#top">Back to top</a>
-			</p>
+			
 
 
 		</div>
 	</div>
 
 
+<a href="#" id="loadMore">Load More</a>
 
+			<p class="totop">
+				<a href="#top">Back to top</a>
+			</p>
 
 
 	<!--  het sp hot -->
@@ -288,7 +288,7 @@
 
 
 
-	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+<%-- 	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 		integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 		crossorigin="anonymous"></script>
 	<script
@@ -313,6 +313,6 @@
 	<script type="text/javascript"
 		src='<c:url value="/resources/Js/ConTen.js"  />'></script>
 
-
+ --%>
 </body>
 </html>

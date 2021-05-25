@@ -14,6 +14,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <html>
 <head>
 <title>Pooled Admin Panel Category Flat Bootstrap Responsive Web Template | Home :: w3layouts</title>
+
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Pooled Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -42,16 +43,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- lined-icons -->
 <link rel="stylesheet" href="<c:url value="/resources/css/icon-font.min.css"/>" type='text/css' />
 <!-- //lined-icons -->
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+ <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+
+<!-- talbe -->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
+
+<script type="text/javascript" charset="utf8" src="<c:url value="/resources/Js/jquery.dataTables.js"/>"></script>
+
 </head> 
 <body>
    <div class="page-container">
    <!--/content-inner-->
 <div class="left-content">
 	 <div class="row">
-		<div style="float:right">
+		<div class="col-lg-9 col-sm-12 " style="float:right">
 				<button id="btnThemSanPham" class="btn btn-primary"> Thêm sản phẩm </button>
 				<button id="xoa-sanpham" class="btn btn-info"> Xóa </button>
 		</div>
+		<div class="col-md-10 col-sm-12 ">
 				<table id="table-sanpham" class="table">
 				<thead>
 					<tr>
@@ -119,7 +130,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </li>
   </ul>
 </nav>
-		
+</div>	
 		
 	</div>
 	<!-- het row -->	

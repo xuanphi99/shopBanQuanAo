@@ -7,8 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Page Danh Mục</title>
-
-<link  href="<c:url value="/resources/Bootstrap/bootstrap.min.css"/>" rel="stylesheet">
+<jsp:include page="header.jsp"/>
+<%-- <link  href="<c:url value="/resources/Bootstrap/bootstrap.min.css"/>" rel="stylesheet">
 <link  href="<c:url value="/resources/css/styleTrangchu.css"/>" rel="stylesheet">
 <link  href="<c:url value="/resources/css/animate.min.css"/>" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
@@ -20,7 +20,7 @@
 
 
 <script> new WOW().init(); </script>
-
+ --%>
 
 </head>
 <body>
@@ -253,7 +253,7 @@
 </div>
 			<!-- end footer  -->
 		
-
+<%-- 
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
@@ -269,6 +269,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.0.0/jquery.magnific-popup.min.js"></script>
 
 	
-<script type="text/javascript" src='<c:url value="/resources/Js/ConTen.js"  />'></script>
+<script type="text/javascript" src='<c:url value="/resources/Js/ConTen.js"  />'></script> --%>
 </body>
 </html>

@@ -51,7 +51,7 @@ public class Trangchu {
 			
 		}
 		// truyen ds cac san pham co trong csdl
-	List<SanPham> listsanPhams = sanPhamService.listSanPham(0);
+	List<SanPham> listsanPhams = sanPhamService.listSanPham(-1);
 
 	map.addAttribute("listSanPham", listsanPhams);
 	map.addAttribute("SizelistSanPham", listsanPhams.size());

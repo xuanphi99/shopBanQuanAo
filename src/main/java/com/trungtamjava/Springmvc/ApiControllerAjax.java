@@ -75,12 +75,23 @@ public class ApiControllerAjax {
     @GetMapping("XuLyDangNhap")
     @ResponseBody
     public String XuLyDangNhap(@RequestParam String email , @RequestParam String matkhau, ModelMap map) {	 
-    	boolean	value =  nhanvienSerice.XuLyDangNhap(email,matkhau)	;
-    	if (value==true) {
-    		map.addAttribute("user",email); // luu sessin
-    	}
-    	return ""+ value;
+    	
+    	try {
+    		NhanVien	nv =  nhanvienSerice.XuLyDangNhap(email,matkhau)	;
+        	if (nv!=null) {
+        		map.addAttribute("user",email); // luu sessin
+        		return "true";
+        	}
+		} catch (Exception e) {
+			return ""+ "false";
+		}
+    	
+    
+    	return ""+ "false";
     }
+    
+
+    
     
 	@GetMapping("XuLyDangKy")
 	@ResponseBody
@@ -95,6 +106,7 @@ public class ApiControllerAjax {
 					nVien.setEmail(email);
 					nVien.setMatKhau(matkhau);
 					boolean ktThem = nhanvienSerice.XuLyDangKy(nVien);
+					
 					if (ktThem) {	
 						kqDk =  "true";		
 					}					  
@@ -136,6 +148,8 @@ public class ApiControllerAjax {
 	        }  
 	        return 0;  
 	    }  
+		
+		// hoaAC SD @REQUSTBODY DE NHAN DU LIEU JSON TU CLIENT DC MA HOA SANG STRING
 	
 		 @GetMapping("AddToCast")
 		 @ResponseBody
@@ -352,7 +366,7 @@ public class ApiControllerAjax {
 				for (SanPham i : listDMByID) {
 					
 
-					String urlAnh = "http://localhost:8080/MiniTest/resources/Image/sanpham/"+i.getHinhSanPham();
+					String urlAnh = "/MiniTest/resources/Image/sanpham/"+i.getHinhSanPham();
 					y= y+ 0.05;
 					str = str + "<div class='col-md-4 col-lg-3 col-sm-6  '> ";
 					str = str + " <div class=\"card text-center wow fadeInDown \"  data-wow-delay=\" "+y+" s \"  > ";

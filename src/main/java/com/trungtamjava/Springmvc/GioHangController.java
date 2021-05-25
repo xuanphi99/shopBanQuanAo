@@ -57,7 +57,7 @@ public class GioHangController {
 		if (httpSession.getAttribute("user")!=null) {
 			String email = (String) httpSession.getAttribute("user");
 			String chucaidau = email.substring(0, 1);
-			m.addAttribute("chucaidau", chucaidau);
+			m.addAttribute("chucaidau", chucaidau); 
 			
 		}
 		
